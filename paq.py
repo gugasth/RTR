@@ -1,14 +1,17 @@
-def encontraPaq(dado, paq):
-    timeSlot = []
+def organiza_timeslots(dado, paq):
+    timeslot = []
 
-    A = 256
-    fim = 512
+    # primeiro quadro
+    first = 256
+    
+    # segundo quadro
+    second = 512
     
     # Procura o PAQ
-    if dado[A : A+1] == '1' and dado[fim : fim + 8] == paq:
+    if dado[first : first+1] == '1' and dado[second : second + 8] == paq:
         # Adiciona na lista 'timeSlot', de 8 em 8 bits
-        timeSlot = [dado[j : j+8] for j in range(0, fim, 8)]    
-    return timeSlot
+        timeslot = [dado[j : j+8] for j in range(0, second, 8)]    
+    return timeslot
 
 with open('RX(vetor)MQ_v2.txt') as arq:
     dado = arq.read()
@@ -16,24 +19,23 @@ with open('RX(vetor)MQ_v2.txt') as arq:
     start = 0
 
     quadro = []
-    paq = '10011011'
-    paqVerd = []
+    PAQ = '10011011'
     
     while True:
-        start = dado.find(paq, start)
-        print('PAQ encontrado na posição:', start)
-
+        # Encontra o PAQ
+        
+        start = dado.find(PAQ, start)
+        
         # Ao terminar o arquivo, sai do loop
         if start == -1:
             break
         # Enquanto não terminar o arquivo
         else:
-            timeSlot = encontraPaq(dado[start:], paq)
-            if len(timeSlot) > 0:
-                paq = (timeSlot.pop(0))            
-            if len(timeSlot) > 0:
-                for idx, i in enumerate(timeSlot):
-                    print(f'Quadro {idx}: {i}')
-                print('Quadro 63 (paq):', paq)
-            #print(i)
+            timeslot = organiza_timeslots(dado[start:], PAQ)        
+            if len(timeslot) > 0:
+                PAQ = (timeslot.pop(0))
+                for idx, i in enumerate(timeslot):
+                    print(f'timeslot {idx}: {i}')
+                print(f'timeslot 63 (paq): {PAQ}, encontrado na posição {start}')
             start += 1
+
