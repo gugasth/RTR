@@ -18,7 +18,7 @@ with open('RX(vetor)MQ_v2.txt') as arq:
     dado = dado.replace(' ', '')
     start = 0
 
-    quadro = []
+    bits_alinhados = []
     PAQ = '10011011'
     
     while True:
@@ -32,6 +32,7 @@ with open('RX(vetor)MQ_v2.txt') as arq:
         # Enquanto não terminar o arquivo
         else:
             timeslot = organiza_timeslots(dado[start:], PAQ)        
+            bits_alinhados.append(timeslot)
             if len(timeslot) > 0:
                 PAQ = (timeslot.pop(0))
                 for idx, i in enumerate(timeslot):
@@ -39,3 +40,5 @@ with open('RX(vetor)MQ_v2.txt') as arq:
                 print(f'timeslot 63 (paq): {PAQ}, encontrado na posição {start}')
             start += 1
 
+
+    print(bits_alinhados)
