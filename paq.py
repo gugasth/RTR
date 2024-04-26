@@ -1,3 +1,5 @@
+import sys
+
 def organiza_timeslots(dado, paq):
     timeslot = []
 
@@ -35,6 +37,9 @@ while True:
         if len(timeslots) > 0:
             PAQ = (timeslots.pop(0))
             quadro += 1
+            if quadro > 16:
+                print('Multiquadro encerrado.')
+                sys.exit()
             print(f'Quadro: {quadro}')
             print(f'timeslot 0 (paq): {PAQ}, encontrado na posição {start}')
             for idx, i in enumerate(timeslots):
