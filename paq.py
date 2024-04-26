@@ -31,13 +31,13 @@ with open('RX(vetor)MQ_v2.txt') as arq:
             break
         # Enquanto não terminar o arquivo
         else:
-            timeslot = organiza_timeslots(dado[start:], PAQ)        
-            if len(timeslot) > 0:
-                PAQ = (timeslot.pop(0))
+            timeslots = organiza_timeslots(dado[start:], PAQ)        
+            if len(timeslots) > 0:
+                PAQ = (timeslots.pop(0))
                 quadro += 1
                 print(f'Quadro: {quadro}')
                 print(f'timeslot 0 (paq): {PAQ}, encontrado na posição {start}')
-                for idx, i in enumerate(timeslot):
+                for idx, i in enumerate(timeslots):
                     if idx > 30:
                         if idx == 31:
                             quadro += 1
@@ -51,7 +51,7 @@ with open('RX(vetor)MQ_v2.txt') as arq:
                             print(f'Canal {quadro}: {i[0]}{i[1]}')
                             print(f'Canal {quadro+15}: {i[4]}{i[5]}')
                         else:
-                            pamq_encontrado = True
-                            print('PAMQ encontrado')
-                
+                            if i[:4] == '0000':  
+                                pamq_encontrado = True
+                                print('PAMQ encontrado')
             start += 1
